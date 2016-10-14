@@ -1,17 +1,17 @@
-import {combineReducers} from 'redux';
-
-const initialAllPuppies = [
-  { id: 1, name: 'Cody' },
-  { id: 2, name: 'Ben' },
-  { id: 3, name: 'Bubba' }
-];
+import { combineReducers } from 'redux';
+import { RECEIVE_PUPPIES, receivePuppies } from './action-creators'
 
 const initialState = {
-  allPuppies: initialAllPuppies
+  allPuppies: []
 }
 
-export function puppyReducer (state = initialState, action) {
+export function puppyReducer(state = initialState, action) {
+  console.log(action);
   switch (action.type) {
+    case RECEIVE_PUPPIES: {
+      return Object.assign({},
+        state, { allPuppies: action.receivedPuppies });
+    }
     default: return state;
   }
 }
