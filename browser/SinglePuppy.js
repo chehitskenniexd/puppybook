@@ -28,6 +28,11 @@ export default (this.props) {
 */
 
 export default ({singlePuppy}) => {
+  if (singlePuppy.name) {
+    console.log(singlePuppy.name);
+    var msg = new SpeechSynthesisUtterance(`${singlePuppy.name}`);
+    window.speechSynthesis.speak(msg);
+  }
   return (
     <div>
       <h2>{singlePuppy.name}</h2>

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { RECEIVE_PUPPIES, receivePuppies, SELECT_PUPPY } from './action-creators'
+import { RECEIVE_PUPPIES, receivePuppies, SELECT_PUPPY, CLEAR_PUPPY } from './action-creators'
 
 
 const initialState = {
@@ -17,6 +17,7 @@ function allPuppiesReducer(state = [], action) {
 function singlePuppyReducer(state = {}, action) {
   switch (action.type) {
     case SELECT_PUPPY: return action.selectedPuppy;
+    case CLEAR_PUPPY: return {}
     default: return state;
   }
 }

@@ -2,6 +2,7 @@
 
 export const RECEIVE_PUPPIES = 'RECEIVE_PUPPIES';
 export const SELECT_PUPPY = 'SELECT_PUPPY';
+export const CLEAR_PUPPY = 'CLEAR_PUPPY';
 
 export const receivePuppies = function (puppies) {
     return {
@@ -14,21 +15,32 @@ export const receivePuppies = function (puppies) {
 export const loadPuppiesFromServer = () =>
     dispatch =>
         fetch('api/puppies')
-        .then(res => res.json())
-        .then(puppies => dispatch(receivePuppies(puppies)))
-        .catch(err => console.error(err));
+            .then(res => res.json())
+            .then(puppies => dispatch(receivePuppies(puppies)))
+            .catch(err => console.error(err));
 
 
 export const receivePuppy = function (puppy) {
-  return {
-    type: SELECT_PUPPY,
-    selectedPuppy: puppy
-  }
+    return {
+        type: SELECT_PUPPY,
+        selectedPuppy: puppy
+    }
 }
 
 export const loadSelectedPuppy = (puppyId) =>
-  dispatch =>
-    fetch(`api/puppies/${puppyId}`)
-    .then(res => res.json())
-    .then(puppy => dispatch(receivePuppy(puppy)))
-    .catch(err => console.error(err));
+    dispatch =>
+        fetch(`api/puppies/${puppyId}`)
+            .then(res => res.json())
+            .then(puppy => dispatch(receivePuppy(puppy)))
+            .catch(err => console.error(err));
+
+export const clearPuppy = function () {
+    return {
+        type: CLEAR_PUPPY,
+        selectedPuppy: {}
+    }
+}
+
+export const clearSelectedPuppy = () =>
+    dispatch =>
+        dispatch(clearPuppy());

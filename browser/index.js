@@ -9,7 +9,7 @@ import SinglePuppyContainer from './SinglePuppyContainer';
 import { Provider } from 'react-redux';
 import store from './store';
 import { Router, Route, hashHistory, IndexRedirect } from 'react-router';
-import { loadPuppiesFromServer, loadSelectedPuppy} from './action-creators';
+import { loadPuppiesFromServer, loadSelectedPuppy, clearSelectedPuppy} from './action-creators';
 
 
 function onEnterSinglePuppy(nextState) {
@@ -25,7 +25,8 @@ ReactDOM.render(
           <Route path="/">
             <Route path="puppies" component={AllPuppiesContainer}
               onEnter={(nextState) => {store.dispatch(loadPuppiesFromServer())}} />
-            <Route path="puppies/:puppyId" component={SinglePuppyContainer} onEnter={onEnterSinglePuppy}/>
+            <Route path="puppies/:puppyId" component={SinglePuppyContainer} 
+              onEnter={onEnterSinglePuppy} onLeave={prevState => {store.dispatch(clearSelectedPuppy())}}/>
             <IndexRedirect to="puppies" />
           </Route>
         </Router>
