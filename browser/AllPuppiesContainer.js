@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import AllPuppies from './AllPuppies';
-import { receivePuppies } from './action-creators'
+import { loadPuppiesFromServer } from './action-creators'
 
 const hardcodedPuppies = [
   { id: 1, name: 'Cody' },
@@ -13,8 +13,9 @@ const mapStateToProps = ({allPuppies}) => ({
   allPuppies
 })
 
+// loadPuppiesFromServer performs an asynchronous request, and thunk knows that it is async, so it won't block the rest of the page from loading while that request is being made
 const mapDispatchToProps = dispatch => ({
-  loadAllPuppies: () => dispatch(receivePuppies(hardcodedPuppies))
+  loadAllPuppies: () => dispatch(loadPuppiesFromServer())
 })
 
 export default connect(
