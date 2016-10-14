@@ -66,11 +66,13 @@
 	
 	var _store = __webpack_require__(199);
 	
+	var _store2 = _interopRequireDefault(_store);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
-	  { store: _store.store },
+	  { store: _store2.default },
 	  _react2.default.createElement(
 	    'div',
 	    { className: 'container flexbox-container' },
@@ -21535,7 +21537,7 @@
 	
 	var _AllPuppies2 = _interopRequireDefault(_AllPuppies);
 	
-	var _actionCreators = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./action-creators\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _actionCreators = __webpack_require__(198);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -23159,7 +23161,37 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 198 */,
+/* 198 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var RECEIVE_PUPPIES = exports.RECEIVE_PUPPIES = 'RECEIVE_PUPPIES';
+	
+	var receivePuppies = exports.receivePuppies = function receivePuppies(puppies) {
+	    return {
+	        type: RECEIVE_PUPPIES,
+	        receivedPuppies: puppies
+	    };
+	};
+	
+	// if thunk receives a function that returns a function, it treats it as an async callback
+	var loadPuppiesFromServer = exports.loadPuppiesFromServer = function loadPuppiesFromServer() {
+	    return function (dispatch) {
+	        return fetch('api/puppies').then(function (res) {
+	            return res.json();
+	        }).then(function (puppies) {
+	            return dispatch(receivePuppies(puppies));
+	        }).catch(function (err) {
+	            return console.error(err);
+	        });
+	    };
+	};
+
+/***/ },
 /* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -23168,52 +23200,25 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.store = undefined;
 	
 	var _redux = __webpack_require__(181);
 	
-	var _reduxThunk = __webpack_require__(200);
+	var _reduxThunk = __webpack_require__(207);
 	
-	var _reducer = __webpack_require__(201);
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reduxLogger = __webpack_require__(202);
+	var _reducer = __webpack_require__(200);
+	
+	var _reduxLogger = __webpack_require__(201);
 	
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var store = exports.store = (0, _redux.createStore)(_reducer.puppyReducer, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk.thunkMiddleware));
+	exports.default = (0, _redux.createStore)(_reducer.puppyReducer, (0, _redux.applyMiddleware)((0, _reduxLogger2.default)(), _reduxThunk2.default));
 
 /***/ },
 /* 200 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	function createThunkMiddleware(extraArgument) {
-	  return function (_ref) {
-	    var dispatch = _ref.dispatch;
-	    var getState = _ref.getState;
-	    return function (next) {
-	      return function (action) {
-	        if (typeof action === 'function') {
-	          return action(dispatch, getState, extraArgument);
-	        }
-	
-	        return next(action);
-	      };
-	    };
-	  };
-	}
-	
-	var thunk = createThunkMiddleware();
-	thunk.withExtraArgument = createThunkMiddleware;
-	
-	exports['default'] = thunk;
-
-/***/ },
-/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23225,7 +23230,7 @@
 	
 	var _redux = __webpack_require__(181);
 	
-	var _actionCreators = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./action-creators\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _actionCreators = __webpack_require__(198);
 	
 	var initialState = {
 	  allPuppies: []
@@ -23235,7 +23240,6 @@
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
 	  var action = arguments[1];
 	
-	  console.log(action);
 	  switch (action.type) {
 	    case _actionCreators.RECEIVE_PUPPIES:
 	      {
@@ -23259,7 +23263,7 @@
 	// }
 
 /***/ },
-/* 202 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23270,11 +23274,11 @@
 	  value: true
 	});
 	
-	var _core = __webpack_require__(203);
+	var _core = __webpack_require__(202);
 	
-	var _helpers = __webpack_require__(204);
+	var _helpers = __webpack_require__(203);
 	
-	var _defaults = __webpack_require__(207);
+	var _defaults = __webpack_require__(206);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -23377,7 +23381,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 203 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23387,9 +23391,9 @@
 	});
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(204);
+	var _helpers = __webpack_require__(203);
 	
-	var _diff = __webpack_require__(205);
+	var _diff = __webpack_require__(204);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -23510,7 +23514,7 @@
 	}
 
 /***/ },
-/* 204 */
+/* 203 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -23534,7 +23538,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ },
-/* 205 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23544,7 +23548,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(206);
+	var _deepDiff = __webpack_require__(205);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -23630,7 +23634,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 206 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -24059,7 +24063,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 207 */
+/* 206 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -24108,6 +24112,34 @@
 	  transformer: undefined
 	};
 	module.exports = exports['default'];
+
+/***/ },
+/* 207 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch;
+	    var getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+	
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+	
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+	
+	exports['default'] = thunk;
 
 /***/ }
 /******/ ]);

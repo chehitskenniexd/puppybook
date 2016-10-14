@@ -6,7 +6,6 @@ const initialState = {
 }
 
 export function puppyReducer(state = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case RECEIVE_PUPPIES: {
       return Object.assign({},
