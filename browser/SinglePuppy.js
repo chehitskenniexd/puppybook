@@ -1,16 +1,39 @@
 import React, { Component } from 'react';
 
-export default class SinglePuppy extends Component {
+// stateful component way
+// export default class SinglePuppy extends Component {
+//
+//   render () {
+//     const {singlePuppy} = this.props;
+//     return (
+//       <div>
+//         <h2>{singlePuppy.name}</h2>
+//         <div>
+//           <img src={singlePuppy.image} />
+//         </div>
+//       </div>
+//     )
+//   }
+// }
 
-  render () {
-    const {singlePuppy} = this.props;
-    return (
+// stateless Component
+/*
+function(this.props){
+  render logics here
+}
+
+export default (this.props) {
+  return () //render logic
+}
+*/
+
+export default ({singlePuppy}) => {
+  return (
+    <div>
+      <h2>{singlePuppy.name}</h2>
       <div>
-        <h2>{singlePuppy.name}</h2>
-        <div>
-          <img src={singlePuppy.image} />
-        </div>
+        <img src={singlePuppy.image} />
       </div>
-    )
-  }
+    </div>
+  )
 }
